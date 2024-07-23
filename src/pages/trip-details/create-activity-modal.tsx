@@ -21,13 +21,20 @@ export function CreateActivityModal({
     const title = data.get("title")?.toString();
     let occurs_at = data.get("occurs_at")?.toString();
 
-    if(!title || !occurs_at) {
-      return
+    if (!title || !occurs_at) {
+      return;
     }
 
-    if(occurs_at) {
-      const date = new Date(occurs_at);
-      occurs_at = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString();
+    if (occurs_at) {
+      const localDate = new Date(occurs_at);
+      const utcDate = new Date(
+        localDate.getUTCFullYear(),
+        localDate.getUTCMonth(),
+        localDate.getUTCDate(),
+        localDate.getUTCHours(),
+        localDate.getUTCMinutes()
+      );
+      occurs_at = utcDate.toISOString();
     }
 
     await api.post(`/trips/${tripId}/activities`, {
