@@ -19,7 +19,7 @@ export function CreateActivityModal({
     const data = new FormData(event.currentTarget);
 
     const title = data.get("title")?.toString();
-    let occurs_at = data.get("occurs_at")?.toString();
+    const occurs_at = data.get("occurs_at")?.toString();
 
     if (!title || !occurs_at) {
       return;
