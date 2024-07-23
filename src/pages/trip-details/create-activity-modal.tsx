@@ -27,13 +27,7 @@ export function CreateActivityModal({
 
     if (occurs_at) {
       const localDate = new Date(occurs_at);
-      const utcDate = new Date(
-        localDate.getUTCFullYear(),
-        localDate.getUTCMonth(),
-        localDate.getUTCDate(),
-        localDate.getUTCHours(),
-        localDate.getUTCMinutes()
-      );
+      const utcDate = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000);
       occurs_at = utcDate.toISOString();
     }
 
