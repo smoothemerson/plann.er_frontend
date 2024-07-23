@@ -21,9 +21,7 @@ export function CreateTripPage() {
     DateRange | undefined
   >();
 
-  const [emailsToInvite, setEmailsToInvite] = useState([
-    "emerson8096@gmail.com",
-  ]);
+  const [emailsToInvite, setEmailsToInvite] = useState<string[]>([]);
 
   function openGuestsInput() {
     setIsGuestsInputOpen(true);
@@ -92,6 +90,10 @@ export function CreateTripPage() {
     }
 
     if (!ownerName || !ownerEmail) {
+      return;
+    }
+
+    if (emailsToInvite.includes(ownerEmail)) {
       return;
     }
 
