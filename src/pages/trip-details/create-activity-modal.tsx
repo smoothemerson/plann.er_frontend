@@ -19,7 +19,16 @@ export function CreateActivityModal({
     const data = new FormData(event.currentTarget);
 
     const title = data.get("title")?.toString();
-    const occurs_at = data.get("occurs_at")?.toString();
+    let occurs_at = data.get("occurs_at")?.toString();
+
+    if(!title || !occurs_at) {
+      return
+    }
+
+    if(occurs_at) {
+      const date = new Date(occurs_at);
+      occurs_at = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString();
+    }
 
     await api.post(`/trips/${tripId}/activities`, {
       title,
