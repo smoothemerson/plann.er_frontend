@@ -25,12 +25,6 @@ export function CreateActivityModal({
       return;
     }
 
-    if (occurs_at) {
-      const localDate = new Date(occurs_at);
-      const utcDate = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000);
-      occurs_at = utcDate.toISOString();
-    }
-
     await api.post(`/trips/${tripId}/activities`, {
       title,
       occurs_at,
