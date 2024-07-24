@@ -2,7 +2,7 @@ import { CircleCheck } from "lucide-react";
 import { api } from "../../lib/axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { format } from "date-fns";
+import { addHours, format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 interface Activity {
@@ -40,13 +40,16 @@ export function Activities() {
             {category.activities.length > 0 ? (
               <div>
                 {category.activities.map((activity) => {
+                  const parsedDate = parseISO(activity.occurs_at);
+                  const adjustedDate = addHours(parsedDate, 3);
+
                   return (
                     <div key={activity.id} className="space-y-2.5">
                       <div className="px-4 py-2.5 bg-zinc-900 rounded-xl shadow-shape flex items-center gap-3">
                         <CircleCheck className="size-5 text-lime-300" />
                         <span className="text-zinc-100">{activity.title}</span>
                         <span className="text-zinc-400 text-sm ml-auto">
-                          {format(activity.occurs_at, "HH:mm")}h
+                          {format(adjustedDate, "HH:mm")}h
                         </span>
                       </div>
                     </div>
